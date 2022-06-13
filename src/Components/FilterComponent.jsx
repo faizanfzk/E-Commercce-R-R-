@@ -33,7 +33,7 @@ const dispatch=useDispatch()
         }
         dispatch(fetchData(params))
       }
-    }, [setSearchParams,categoryValues,searchParams])
+    }, [setSearchParams,categoryValues,searchParams,dispatch])
     return(
       <Box>
           <Box display={{base:"none",md:"block"}} p="1rem 2rem">

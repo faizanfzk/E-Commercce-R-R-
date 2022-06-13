@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { Box, Flex } from "@chakra-ui/react"
 import { FilterComponents } from "../Components/FilterComponent"
 import { useDispatch, useSelector } from "react-redux"
-import {useSearchParams} from "react-router-dom"
+import {useSearchParams , Link as RouterLink} from "react-router-dom"
 
 import { fetchData } from "../Redux/Products/action"
 import { Stack } from "@chakra-ui/react"
@@ -12,13 +12,15 @@ import {
     useColorModeValue,
     Heading,
     Text,
-
+  Link,
     Image,
   } from '@chakra-ui/react';
 
 
 export const Products=()=>{
     const products=useSelector(store=>store.ecommerceData.products)
+    const authStatus=useSelector(store=>store.authReducer.auth)
+    console.log(authStatus)
     console.log(products)
     const dispatch=useDispatch()
     const [searchParams]=useSearchParams()
@@ -37,22 +39,24 @@ export const Products=()=>{
     return(
         <Box>
             <Stack display={{ md:"flex" }} flexDirection={{ md:"row" }}>
-     <Box>
+     <Box minWidth={"15rem"}>
          <FilterComponents/>
      </Box>
      <Box>
          <Heading as="h3">Products</Heading>
-         
+       
+       
          <Flex flexWrap="wrap" justifyContent="space-between">
-          
              {products.map((item)=>{
                  return(
+                     <Link as={RouterLink} to={`/products/${item.id}`}>
                     <ProductSimple key={item.id} image={item.image} price={item.price} title={item.title}/>
 
+             </Link>
                  )
              })}
-         
          </Flex>
+       
          </Box>
      
      </Stack>
@@ -68,7 +72,7 @@ export const Products=()=>{
           maxW={'330px'}
           w={'full'}
           bg={useColorModeValue('white', 'gray.800')}
-          boxShadow={'2xl'}
+          boxShadow={'1xl'}
           rounded={'lg'}
           pos={'relative'}
           zIndex={1}>
@@ -96,9 +100,9 @@ export const Products=()=>{
             }}>
             <Image
               rounded={'lg'}
-              height={230}
+              height={200}
               width={282}
-              objectFit={'container'}
+              objectFit={'contain'}
               src={image}
             />
           </Box>
